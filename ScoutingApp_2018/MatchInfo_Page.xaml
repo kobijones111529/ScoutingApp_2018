@@ -1,0 +1,82 @@
+﻿<Page x:Class="ScoutingApp_2018.MatchInfo_Page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ScoutingApp_2018"
+	  xmlns:sys="clr-namespace:System;assembly=mscorlib"
+      mc:Ignorable="d"
+      d:DesignHeight="768" d:DesignWidth="1024"
+      Title="MatchInfo_Page">
+	<Page.Resources>
+		<x:Array x:Key="Alliance_Array" Type="sys:String">
+			<sys:String>Blue 1</sys:String>
+			<sys:String>Blue 2</sys:String>
+			<sys:String>Blue 3</sys:String>
+			<sys:String>Red 1</sys:String>
+			<sys:String>Red 2</sys:String>
+			<sys:String>Red 3</sys:String>
+		</x:Array>
+		<x:Array x:Key="Event_Array" Type="sys:String">
+			<sys:String>Practice</sys:String>
+		</x:Array>
+	</Page.Resources>
+	<Grid Background="#1F1F1F">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
+
+		<StackPanel Grid.Column="0" Background="#AA3939">
+			<Button Style="{StaticResource HomeButton}" Click="Home_Button_Click"/>
+		</StackPanel>
+		<Grid Grid.Column="1">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="3*"/>
+				<RowDefinition/>
+			</Grid.RowDefinitions>
+
+			<ScrollViewer Name="Data_ScrollViewer" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition/>
+						<ColumnDefinition Width="4*"/>
+						<ColumnDefinition/>
+					</Grid.ColumnDefinitions>
+
+					<StackPanel Grid.Column="1" Margin="0, 40">
+						<StackPanel Name="InvalidData_StackPanel" Margin="0, 0, 0, 20" Orientation="Horizontal" Visibility="Collapsed">
+							<TextBlock Margin="0, 4, 20, 0" Foreground="#AAAA39" FontFamily="Segoe MDL2 Assets" FontSize="24">&#xE7BA;</TextBlock>
+							<TextBlock Name="InvalidData_TextBlock" Foreground="#AAAA39" FontSize="24"/>
+						</StackPanel>
+						<StackPanel>
+							<TextBlock Foreground="White" FontSize="24">Recorder ID</TextBlock>
+							<ComboBox Name="RecorderID_ComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="24" Margin="0, 0, 0, 40"/>
+						</StackPanel>
+						<StackPanel>
+							<TextBlock Foreground="White" FontSize="24">Alliance</TextBlock>
+							<ComboBox Name="Alliance_ComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="24" Margin="0, 0, 0, 40" ItemsSource="{StaticResource Alliance_Array}"/>
+						</StackPanel>
+						<StackPanel>
+							<TextBlock Foreground="White" FontSize="24">Event</TextBlock>
+							<ComboBox Name="Event_ComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="24" Margin="0, 0, 0, 40" ItemsSource="{StaticResource Event_Array}" IsEditable="True"/>
+						</StackPanel>
+						<StackPanel>
+							<TextBlock Foreground="White" FontSize="24">Match Number</TextBlock>
+							<TextBox Name="MatchNumber_TextBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24" Margin="0, 0, 0, 40" TextChanged="MatchNumber_TextBox_TextChanged"/>
+						</StackPanel>
+						<StackPanel>
+							<TextBlock Foreground="White" FontSize="24">Team Number</TextBlock>
+							<TextBox Name="TeamNumber_TextBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24" Margin="0, 0, 0, 50" TextChanged="TeamNumber_TextBox_TextChanged"/>
+						</StackPanel>
+					</StackPanel>
+				</Grid>
+			</ScrollViewer>
+			<Grid Grid.Row="1">
+				<Border BorderThickness="0, 2, 0, 0" BorderBrush="#FFFFFF">
+					<Button Name="Submit_Button" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="200, 40" FontSize="36" Click="Submit_Button_Click">Submit</Button>
+				</Border>
+			</Grid>
+		</Grid>
+	</Grid>
+</Page>

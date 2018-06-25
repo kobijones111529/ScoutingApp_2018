@@ -1,0 +1,56 @@
+﻿<Page x:Class="ScoutingApp_2018.Prematch_Page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ScoutingApp_2018"
+      mc:Ignorable="d" 
+      d:DesignHeight="768" d:DesignWidth="1024"
+      Title="Prematch_Page">
+	<Grid Background="#1F1F1F">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
+
+		<StackPanel Grid.Column="0" Background="#AA3939">
+			<Button Style="{StaticResource HomeButton}" Click="Home_Button_Click"/>
+			<Button Style="{StaticResource BackButton}" Click="Back_Button_Click"/>
+		</StackPanel>
+		<Grid Grid.Column="1">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="3*"/>
+				<RowDefinition/>
+			</Grid.RowDefinitions>
+
+			<ScrollViewer Grid.Row="0">
+				<Grid Margin="0, 50">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition/>
+						<ColumnDefinition Width="4*"/>
+						<ColumnDefinition/>
+					</Grid.ColumnDefinitions>
+
+					<StackPanel Grid.Column="1">
+						<StackPanel Margin="0, 0, 0, 40">
+							<TextBlock Name="RecorderID_TextBlock" Foreground="#AA3939" FontSize="24" Margin="0, 0, 0, 8">RecorderID</TextBlock>
+							<TextBlock Name="Alliance_TextBlock" Foreground="#AA3939" FontSize="24" Margin="0, 0, 0, 8">Alliance</TextBlock>
+							<TextBlock Name="Event_TextBlock" Foreground="#AA3939" FontSize="24" Margin="0, 0, 0, 8">Event</TextBlock>
+							<TextBlock Name="MatchNumber_TextBlock" Foreground="#AA3939" FontSize="24" Margin="0, 0, 0, 8">MatchNumber</TextBlock>
+							<TextBlock Name="TeamNumber_TextBlock" Foreground="#AA3939" FontSize="24" Margin="0, 0, 0, 8">TeamNumber</TextBlock>
+						</StackPanel>
+						<StackPanel>
+							<TextBlock Foreground="White" FontSize="24">Prematch Notes</TextBlock>
+							<TextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="PrematchNotes_TextBox" FontSize="24" Margin="0, 0, 0, 50" AcceptsReturn="True"/>
+						</StackPanel>
+					</StackPanel>
+				</Grid>
+			</ScrollViewer>
+			<Grid Grid.Row="1">
+				<Border BorderThickness="0, 2, 0, 0" BorderBrush="#FFFFFF">
+					<Button Name="StartMatch_Button" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="200, 40" FontSize="36" Click="StartMatch_Button_Click">Start Match</Button>
+				</Border>
+			</Grid>
+		</Grid>
+	</Grid>
+</Page>
