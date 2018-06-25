@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:ScoutingApp_2018"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+		<FontFamily x:Key="Raleway Black">pack://application:,,,/Fonts/Raleway/#Raleway Black</FontFamily>
+		<FontFamily x:Key="Raleway Light">pack://application:,,,/Fonts/Raleway/#Raleway Light</FontFamily>
 		<Style TargetType="Button">
 			<Setter Property="Background" Value="#AA3939"/>
 			<Setter Property="BorderBrush" Value="#AA3939"/>
@@ -131,6 +133,7 @@
 		</Style>
 		<Style TargetType="TextBlock">
 			<Setter Property="Foreground" Value="#1F1F1F"/>
+			<Setter Property="FontFamily" Value="{StaticResource Raleway Light}"/>
 		</Style>
 		<Style TargetType="ComboBox">
 			<Style.Triggers>

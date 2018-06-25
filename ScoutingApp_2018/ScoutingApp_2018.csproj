@@ -109,6 +109,24 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="Fonts\Raleway\Raleway-Black.ttf" />
+    <Resource Include="Fonts\Raleway\Raleway-BlackItalic.ttf" />
+    <Resource Include="Fonts\Raleway\Raleway-Bold.ttf" />
+    <Resource Include="Fonts\Raleway\Raleway-BoldItalic.ttf" />
+    <Resource Include="Fonts\Raleway\Raleway-ExtraBold.ttf" />
+    <Resource Include="Fonts\Raleway\Raleway-ExtraBoldItalic.ttf" />
+    <Resource Include="Fonts\Raleway\Raleway-ExtraLight.ttf" />
+    <Resource Include="Fonts\Raleway\Raleway-ExtraLightItalic.ttf" />
+    <Resource Include="Fonts\Raleway\Raleway-Italic.ttf" />
+    <Resource Include="Fonts\Raleway\Raleway-Light.ttf" />
+    <Resource Include="Fonts\Raleway\Raleway-LightItalic.ttf" />
+    <Resource Include="Fonts\Raleway\Raleway-Medium.ttf" />
+    <Resource Include="Fonts\Raleway\Raleway-MediumItalic.ttf" />
+    <Resource Include="Fonts\Raleway\Raleway-Regular.ttf" />
+    <Resource Include="Fonts\Raleway\Raleway-SemiBold.ttf" />
+    <Resource Include="Fonts\Raleway\Raleway-SemiBoldItalic.ttf" />
+    <Resource Include="Fonts\Raleway\Raleway-Thin.ttf" />
+    <Resource Include="Fonts\Raleway\Raleway-ThinItalic.ttf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -119,8 +137,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Fonts\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
