@@ -19,14 +19,9 @@ namespace ScoutingApp_2018 {
 		public UInt16 year;
 		public String recorderID;
 		public String alliance;
+		public String Event;
 		public UInt16 teamNumber;
 		public UInt16 matchNumber;
-	}
-
-	public class ExternalData {
-		public UInt16 year;
-		public String[] recorderID_itemsList;
-		public String[] alliance_itemsList;
 	}
 
 	public class FormData {

@@ -1,0 +1,41 @@
+﻿<Page x:Class="ScoutingApp_2018.Match_Page"
+	  x:Name="Match_Page1"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ScoutingApp_2018"
+      mc:Ignorable="d" 
+      d:DesignHeight="768" d:DesignWidth="1024"
+      Title="Match_Page"
+	  DataContext="{Binding RelativeSource={RelativeSource Self}}">
+
+    <Grid Background="#1F1F1F">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="3*"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+
+		<TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="100" Text="1:23:45"/>
+		<Border Grid.Row="1" BorderThickness="0, 2, 0, 0" BorderBrush="#FFFFFF">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition/>
+					<ColumnDefinition Width="2*"/>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
+
+				<StackPanel Grid.Column="0" Margin="40">
+					<TextBlock Name="RecorderID_TextBlock" Margin="0, 0, 0, 8" Foreground="#AA3939" FontSize="24">RecorderID</TextBlock>
+					<TextBlock Name="Alliance_TextBlock" Margin="0, 0, 0, 8" Foreground="#AA3939" FontSize="24">Alliance</TextBlock>
+				</StackPanel>
+				<Button Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="40, 40" FontSize="36">Abort</Button>
+				<StackPanel Grid.Column="2" Margin="40" TextBlock.TextAlignment="Right">
+					<TextBlock Name="Event_TextBlock" Margin="0, 0, 0, 8" Foreground="#AA3939" FontSize="24">Event</TextBlock>
+					<TextBlock Name="MatchNumber_TextBlock" Margin="0, 0, 0, 8" Foreground="#AA3939" FontSize="24">MatchNumber</TextBlock>
+					<TextBlock Name="TeamNumber_TextBlock" Margin="0, 0, 0, 8" Foreground="#AA3939" FontSize="24">TeamNumber</TextBlock>
+				</StackPanel>
+			</Grid>
+		</Border>
+    </Grid>
+</Page>

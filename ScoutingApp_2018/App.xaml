@@ -3,11 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:ScoutingApp_2018"
              StartupUri="MainWindow.xaml">
-    <Application.Resources>
-		<FontFamily x:Key="Raleway Black">pack://application:,,,/Fonts/Raleway/#Raleway Black</FontFamily>
+	<Application.Resources>
 		<FontFamily x:Key="Raleway Light">pack://application:,,,/Fonts/Raleway/#Raleway Light</FontFamily>
 		<Style TargetType="Button">
 			<Setter Property="Background" Value="#AA3939"/>
+			<Setter Property="Foreground" Value="#2F2F2F"/>
 			<Setter Property="BorderBrush" Value="#AA3939"/>
 			<Setter Property="BorderThickness" Value="0"/>
 			<Setter Property="Template">
@@ -136,11 +136,15 @@
 			<Setter Property="FontFamily" Value="{StaticResource Raleway Light}"/>
 		</Style>
 		<Style TargetType="ComboBox">
+			<Setter Property="FontFamily" Value="{StaticResource Raleway Light}"/>
 			<Style.Triggers>
 				<Trigger Property="IsKeyboardFocusWithin" Value="True">
 					<Setter Property="IsDropDownOpen" Value="True"/>
 				</Trigger>
 			</Style.Triggers>
+		</Style>
+		<Style TargetType="TextBox">
+			<Setter Property="FontFamily" Value="{StaticResource Raleway Light}"/>
 		</Style>
 	</Application.Resources>
 </Application>

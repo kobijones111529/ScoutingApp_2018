@@ -13,9 +13,13 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using System.Diagnostics;
+
 namespace ScoutingApp_2018 {
-	public partial class Prematch_Page : Page {
-		public Prematch_Page() {
+	public partial class Match_Page : Page {
+		Stopwatch MatchTimer = new Stopwatch();
+
+		public Match_Page() {
 			InitializeComponent();
 
 			RecorderID_TextBlock.Text = string.Format(App.FormDataCache.RecorderID.Value);
@@ -23,21 +27,8 @@ namespace ScoutingApp_2018 {
 			Event_TextBlock.Text = string.Format(App.FormDataCache.Event.Value);
 			MatchNumber_TextBlock.Text = string.Format("Match {0}", App.FormDataCache.MatchNumber.Value);
 			TeamNumber_TextBlock.Text = string.Format("Team {0}", App.FormDataCache.TeamNumber.Value);
-			PrematchNotes_TextBox.Text = App.FormDataCache.PrematchNotes?.Value;
-		}
 
-		public void Home_Button_Click(object sender, RoutedEventArgs e) {
-			NavigationService.Navigate(new Home_Page());
-		}
-
-		private void Back_Button_Click(object sender, RoutedEventArgs e) {
-			NavigationService.Navigate(new MatchInfo_Page());
-		}
-
-		private void StartMatch_Button_Click(object sender, RoutedEventArgs e) {
-			App.FormDataCache.PrematchNotes = new DataElement<String>(PrematchNotes_TextBox.Text);
-
-			NavigationService.Navigate(new Match_Page());
+			MatchTimer.Start();
 		}
 	}
 }
