@@ -6,6 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
+
+
 namespace ScoutingApp_2018 {
 	public class DataElement<T> {
 		public T Value { get; set; }

@@ -5,6 +5,7 @@
              StartupUri="MainWindow.xaml">
 	<Application.Resources>
 		<FontFamily x:Key="Raleway Light">pack://application:,,,/Fonts/Raleway/#Raleway Light</FontFamily>
+		<FontFamily x:Key="Lato Light">pack://application:,,,/Fonts/Lato/#Lato Light</FontFamily>
 		<Style TargetType="Button">
 			<Setter Property="Background" Value="#AA3939"/>
 			<Setter Property="Foreground" Value="#2F2F2F"/>

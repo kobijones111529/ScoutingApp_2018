@@ -37,11 +37,21 @@ namespace ScoutingApp_2018 {
 				RecorderID_ComboBox.Items.Add(recorderID);
 			}
 
+			/*
 			RecorderID_ComboBox.SelectedItem = App.FormDataCache.RecorderID?.Value;
 			Alliance_ComboBox.SelectedItem = App.FormDataCache.Alliance?.Value;
 			Event_ComboBox.SelectedItem = App.FormDataCache.Event?.Value;
 			MatchNumber_TextBox.Text = App.FormDataCache.MatchNumber?.Value.ToString();
 			TeamNumber_TextBox.Text = App.FormDataCache.TeamNumber?.Value.ToString();
+			*/
+
+			//*
+			RecorderID_ComboBox.SelectedItem = App.FormDataCache.RecorderID != null ? App.FormDataCache.RecorderID.Value : RecorderID_ComboBox.Items[0];
+			Alliance_ComboBox.SelectedItem = App.FormDataCache.Alliance != null ? App.FormDataCache.Alliance.Value : Alliance_ComboBox.Items[0];
+			Event_ComboBox.SelectedItem = App.FormDataCache.Event != null ? App.FormDataCache.Event.Value : Event_ComboBox.Items[0];
+			MatchNumber_TextBox.Text = App.FormDataCache.RecorderID != null ? App.FormDataCache.MatchNumber.Value.ToString() : "1";
+			TeamNumber_TextBox.Text = App.FormDataCache.TeamNumber != null ? App.FormDataCache.TeamNumber.Value.ToString() : "2512";
+			//*/
 		}
 
 		public void Home_Button_Click(object sender, RoutedEventArgs e) {

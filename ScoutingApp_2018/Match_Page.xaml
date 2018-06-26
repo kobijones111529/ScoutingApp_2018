@@ -5,35 +5,43 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ScoutingApp_2018"
+	  xmlns:views="clr-namespace:ScoutingApp_2018.Views"
       mc:Ignorable="d" 
       d:DesignHeight="768" d:DesignWidth="1024"
-      Title="Match_Page"
-	  DataContext="{Binding RelativeSource={RelativeSource Self}}">
+      Title="Match_Page">
 
     <Grid Background="#1F1F1F">
 		<Grid.RowDefinitions>
-			<RowDefinition Height="3*"/>
-			<RowDefinition/>
+			<RowDefinition Height="1*"/>
+			<RowDefinition Height="5*"/>
+			<RowDefinition Height="2*"/>
 		</Grid.RowDefinitions>
 
-		<TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="100" Text="1:23:45"/>
-		<Border Grid.Row="1" BorderThickness="0, 2, 0, 0" BorderBrush="#FFFFFF">
+		<Border Grid.Row="0" BorderThickness="0, 0, 0, 2" BorderBrush="White">
+			
+		</Border>
+		<Border Grid.Row="2" BorderThickness="0, 2, 0, 0" BorderBrush="White">
 			<Grid>
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition/>
+					<ColumnDefinition Width="3*"/>
+					<ColumnDefinition Width="5*"/>
 					<ColumnDefinition Width="2*"/>
-					<ColumnDefinition/>
 				</Grid.ColumnDefinitions>
 
-				<StackPanel Grid.Column="0" Margin="40">
-					<TextBlock Name="RecorderID_TextBlock" Margin="0, 0, 0, 8" Foreground="#AA3939" FontSize="24">RecorderID</TextBlock>
-					<TextBlock Name="Alliance_TextBlock" Margin="0, 0, 0, 8" Foreground="#AA3939" FontSize="24">Alliance</TextBlock>
+				<StackPanel Grid.Row="0" Name="Timer_StackPanel" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+					<TextBlock Name="TimerMinutes_TextBlock" Foreground="White" FontFamily="{StaticResource Lato Light}" FontSize="64"/>
+					<TextBlock Foreground="White" FontFamily="{StaticResource Lato Light}" FontSize="64">:</TextBlock>
+					<TextBlock Name="TimerSeconds_TextBlock" Foreground="White" FontFamily="{StaticResource Lato Light}" FontSize="64"/>
 				</StackPanel>
-				<Button Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="40, 40" FontSize="36">Abort</Button>
-				<StackPanel Grid.Column="2" Margin="40" TextBlock.TextAlignment="Right">
-					<TextBlock Name="Event_TextBlock" Margin="0, 0, 0, 8" Foreground="#AA3939" FontSize="24">Event</TextBlock>
-					<TextBlock Name="MatchNumber_TextBlock" Margin="0, 0, 0, 8" Foreground="#AA3939" FontSize="24">MatchNumber</TextBlock>
-					<TextBlock Name="TeamNumber_TextBlock" Margin="0, 0, 0, 8" Foreground="#AA3939" FontSize="24">TeamNumber</TextBlock>
+				<StackPanel Grid.Column="0" Margin="20">
+					</StackPanel>
+				<Button Name="Abort_Button" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="40, 40" FontSize="36" Click="Abort_Button_Click">Abort</Button>
+				<StackPanel Grid.Column="2" Margin="20" TextBlock.TextAlignment="Right">
+					<TextBlock Name="RecorderID_TextBlock" Margin="0, 0, 0, 8" Foreground="#AA3939" FontSize="18">RecorderID</TextBlock>
+					<TextBlock Name="Alliance_TextBlock" Margin="0, 0, 0, 8" Foreground="#AA3939" FontSize="18">Alliance</TextBlock>
+					<TextBlock Name="Event_TextBlock" Margin="0, 0, 0, 8" Foreground="#AA3939" FontSize="18">Event</TextBlock>
+					<TextBlock Name="MatchNumber_TextBlock" Margin="0, 0, 0, 8" Foreground="#AA3939" FontSize="18">MatchNumber</TextBlock>
+					<TextBlock Name="TeamNumber_TextBlock" Margin="0, 0, 0, 8" Foreground="#AA3939" FontSize="18">TeamNumber</TextBlock>
 				</StackPanel>
 			</Grid>
 		</Border>
