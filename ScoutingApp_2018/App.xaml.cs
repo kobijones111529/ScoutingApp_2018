@@ -10,6 +10,11 @@ using System.IO;
 using Path = System.IO.Path;
 
 namespace ScoutingApp_2018 {
+	public class StringPair {
+		public string Key { get; set; }
+		public string Value { get; set; }
+	}
+
 	public enum Stage {
 		Autonomous, Teleop, Endgame
 	}
@@ -69,7 +74,11 @@ namespace ScoutingApp_2018 {
 
 	//Wrapper class, allows MatchInfo elements to be nullable
 	public class MatchInfoElement<T> {
-		public T Value;
+		public T Value { get; set; }
+
+		public static explicit operator MatchInfoElement<T>(T t) {
+			return new MatchInfoElement<T>() { Value = t };
+		}
 	}
 
 	//Match info entered prior to or after the match

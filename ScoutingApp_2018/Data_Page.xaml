@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ScoutingApp_2018"
 	  xmlns:System="clr-namespace:System;assembly=mscorlib"
-      mc:Ignorable="d" 
+	  mc:Ignorable="d"
       d:DesignHeight="768" d:DesignWidth="1024"
       Title="Data_Page">
 	<Grid Background="#1F1F1F">
@@ -31,9 +31,14 @@
 						<ColumnDefinition/>
 					</Grid.ColumnDefinitions>
 
-					<ListBox Grid.Column="1" Name="Files_ListBox" Margin="0, 40, 0, 0" Background="Transparent" BorderThickness="0" SelectionMode="Multiple" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>
+					<ListBox Grid.Column="1" Name="Files_ListBox" Margin="0, 40, 0, 0" Background="Transparent" BorderThickness="0" SelectionMode="Multiple" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<TextBlock FontFamily="{StaticResource Lato Light}" FontSize="12" Text="{Binding Value}"/>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
 				</Grid>
-				
 			</ScrollViewer>
 			<Border Grid.Row="1" BorderBrush="White" BorderThickness="0, 2, 0, 0">
 				<Grid Background="{StaticResource AccentColor1}" HorizontalAlignment="Center" VerticalAlignment="Center">

@@ -10,20 +10,7 @@
       d:DesignHeight="768" d:DesignWidth="1024"
       Title="MatchInfo_Page"
 	  Loaded="Page_Loaded">
-	<Page.Resources>
-		<x:Array x:Key="Alliance_Array" Type="sys:String">
-			<sys:String>Blue 1</sys:String>
-			<sys:String>Blue 2</sys:String>
-			<sys:String>Blue 3</sys:String>
-			<sys:String>Red 1</sys:String>
-			<sys:String>Red 2</sys:String>
-			<sys:String>Red 3</sys:String>
-		</x:Array>
-		<x:Array x:Key="Event_Array" Type="sys:String">
-			<sys:String>Practice</sys:String>
-		</x:Array>
-	</Page.Resources>
-	<Grid Background="#1F1F1F">
+	<Grid Background="{StaticResource BaseColor1}">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto"/>
 			<ColumnDefinition/>
@@ -47,31 +34,53 @@
 					</Grid.ColumnDefinitions>
 
 					<StackPanel Grid.Column="1" Margin="0, 40">
+						<StackPanel.Resources>
+							<Style TargetType="TextBlock">
+								<Setter Property="Foreground" Value="White"/>
+								<Setter Property="FontFamily" Value="{StaticResource Raleway Light}"/>
+								<Setter Property="FontSize" Value="24"/>
+							</Style>
+							<Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+								<Setter Property="Foreground" Value="{StaticResource BaseColor1Light1}"/>
+								<Setter Property="FontFamily" Value="{StaticResource Lato Light}"/>
+								<Setter Property="FontSize" Value="24"/>
+								<Setter Property="ItemTemplate">
+									<Setter.Value>
+										<DataTemplate>
+											<TextBlock Foreground="{StaticResource BaseColor1Light1}" FontFamily="{StaticResource Lato Light}" FontSize="24" Text="{Binding}"/>
+										</DataTemplate>
+									</Setter.Value>
+								</Setter>
+							</Style>
+							<Style TargetType="TextBox">
+								<Setter Property="Foreground" Value="{StaticResource BaseColor1Light1}"/>
+								<Setter Property="FontFamily" Value="{StaticResource Lato Light}"/>
+								<Setter Property="FontSize" Value="24"/>
+							</Style>
+						</StackPanel.Resources>
 						<StackPanel Name="InvalidData_StackPanel" Margin="0, 0, 0, 20" Orientation="Horizontal" Visibility="Collapsed">
-							<TextBlock Margin="0, 4, 20, 0" Foreground="#AAAA39" FontFamily="Segoe MDL2 Assets" FontSize="24">&#xE7BA;</TextBlock>
+							<TextBlock Margin="0, 4, 20, 0" Foreground="{StaticResource AccentColor2}" FontSize="24">&#xE7BA;</TextBlock>
 							<TextBlock Name="InvalidData_TextBlock" Foreground="#AAAA39" FontSize="24"/>
 						</StackPanel>
 						<StackPanel>
 							<TextBlock Foreground="White" FontSize="24">Recorder ID</TextBlock>
-							<ComboBox Name="RecorderID_ComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontFamily="{StaticResource Lato Light}" FontSize="24" Margin="0, 0, 0, 40">
-								
-							</ComboBox>
+							<ComboBox Name="RecorderID_ComboBox" Margin="0, 0, 0, 40"/>
 						</StackPanel>
 						<StackPanel>
 							<TextBlock Foreground="White" FontSize="24">Alliance</TextBlock>
-							<ComboBox Name="Alliance_ComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontFamily="{StaticResource Lato Light}" FontSize="24" Margin="0, 0, 0, 40"/>
+							<ComboBox Name="Alliance_ComboBox" Margin="0, 0, 0, 40"/>
 						</StackPanel>
 						<StackPanel>
 							<TextBlock Foreground="White" FontSize="24">Event</TextBlock>
-							<ComboBox Name="Event_ComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontFamily="{StaticResource Lato Light}" FontSize="24" Margin="0, 0, 0, 40" IsEditable="True"/>
+							<ComboBox Name="Event_ComboBox" Margin="0, 0, 0, 40" IsEditable="True"/>
 						</StackPanel>
 						<StackPanel>
 							<TextBlock Foreground="White" FontSize="24">Match Number</TextBlock>
-							<TextBox Name="MatchNumber_TextBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontFamily="{StaticResource Lato Light}" FontSize="24" Margin="0, 0, 0, 40" TextChanged="MatchNumber_TextBox_TextChanged"/>
+							<TextBox Name="MatchNumber_TextBox" Margin="0, 0, 0, 40" TextChanged="UInt16_TextBox_TextChanged"/>
 						</StackPanel>
 						<StackPanel>
 							<TextBlock Foreground="White" FontSize="24">Team Number</TextBlock>
-							<TextBox Name="TeamNumber_TextBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontFamily="{StaticResource Lato Light}" FontSize="24" Margin="0, 0, 0, 50" TextChanged="TeamNumber_TextBox_TextChanged"/>
+							<TextBox Name="TeamNumber_TextBox" Margin="0, 0, 0, 50" TextChanged="UInt16_TextBox_TextChanged"/>
 						</StackPanel>
 					</StackPanel>
 				</Grid>

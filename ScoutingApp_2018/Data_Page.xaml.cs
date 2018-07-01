@@ -29,12 +29,7 @@ namespace ScoutingApp_2018 {
 			Files_ListBox.Items.Clear();
 			List<string> files = Directory.GetFiles(App.ScoutingDataLocation).ToList();
 			foreach(string file in files) {
-				FileViewItem fileViewItem = new FileViewItem() {
-					Foreground = new SolidColorBrush(Colors.White),
-					Text = Path.GetFileName(file),
-					File = file
-				};
-				Files_ListBox.Items.Add(fileViewItem);
+				Files_ListBox.Items.Add(new StringPair() { Key = file, Value = Path.GetFileName(file) });
 			}
 		}
 
@@ -51,8 +46,8 @@ namespace ScoutingApp_2018 {
 
 		//Delete selected scouting data files
 		private void Delete_Button_Click(object sender, RoutedEventArgs e) {
-			foreach(FileViewItem file_FileViewItem in Files_ListBox.SelectedItems) {
-				string file = file_FileViewItem.File;
+			foreach(StringPair file_FileViewItem in Files_ListBox.SelectedItems) {
+				string file = file_FileViewItem.Key;
 				if(File.Exists(file))
 				File.Delete(file);
 			}
@@ -69,8 +64,8 @@ namespace ScoutingApp_2018 {
 			System.Windows.Forms.FolderBrowserDialog folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
 			if(folderBrowserDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
 				string path = folderBrowserDialog.SelectedPath;
-				foreach(FileViewItem file_FileViewItem in Files_ListBox.SelectedItems) {
-					string file = file_FileViewItem.File;
+				foreach(StringPair file_FileViewItem in Files_ListBox.SelectedItems) {
+					string file = file_FileViewItem.Value;
 					FileStream sourceStream = File.Open(file, FileMode.Open);
 					FileStream destinationStream = File.Create(Path.Combine(path, Path.GetFileName(file)));
 					await sourceStream.CopyToAsync(destinationStream);

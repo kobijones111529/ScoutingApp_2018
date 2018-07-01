@@ -37,50 +37,30 @@ namespace ScoutingApp_2018 {
 
 		//Displays last event for user
 		private void UpdateLastEvent() {
-			LastEvent_StackPanel.Children.Clear();
-
 			if(!matchData.Any()) {
 				Undo_Button.IsEnabled = false;
 
-				TextBlock event_TextBlock = new TextBlock() {
-					Foreground = new SolidColorBrush(Colors.White),
-					TextAlignment = TextAlignment.Center,
-					FontSize = 24,
-					Text = "Match Started"
-				};
-				LastEvent_StackPanel.Children.Add(event_TextBlock);
+				LastEventType_TextBlock.Text = "Match Started";
+				LastEventStage_TextBlock.Visibility = Visibility.Collapsed;
+				LastEventTime_TextBlock.Visibility = Visibility.Collapsed;
 
 				return;
 			} else {
 				Undo_Button.IsEnabled = true;
+				
+				LastEventStage_TextBlock.Visibility = Visibility.Visible;
+				LastEventTime_TextBlock.Visibility = Visibility.Visible;
 			}
 
-			//Not null if event contains Time property
+			LastEventType_TextBlock.Text = matchData[0].Type;
+			LastEventStage_TextBlock.Text = matchData[0].Stage.ToString();
+
 			ITimedMatchDataElement timedMatchDataElement = matchData[0] as ITimedMatchDataElement;
-
-			TextBlock eventType_TextBlock = new TextBlock {
-				Foreground = new SolidColorBrush(Colors.White),
-				TextAlignment = TextAlignment.Center,
-				FontSize = 24,
-				Text = matchData[0].Type
-			};
-			TextBlock eventStage_TextBlock = new TextBlock {
-				Foreground = new SolidColorBrush(Colors.White),
-				TextAlignment = TextAlignment.Center,
-				FontSize = 18,
-				Text = matchData[0].Stage.ToString()
-			};
-			TextBlock eventTime_TextBlock = timedMatchDataElement == null ? null : new TextBlock {
-				Foreground = new SolidColorBrush(Colors.White),
-				TextAlignment = TextAlignment.Center,
-				FontFamily = (FontFamily)FindResource("Lato Light"),
-				FontSize = 18,
-				Text = string.Format(@"{0:m\:ss}", new TimeSpan(0, 2, 30) - timedMatchDataElement.Time)
-			};
-
-			LastEvent_StackPanel.Children.Add(eventType_TextBlock);
-			LastEvent_StackPanel.Children.Add(eventStage_TextBlock);
-			if(eventTime_TextBlock != null) LastEvent_StackPanel.Children.Add(eventTime_TextBlock);
+			if(timedMatchDataElement == null) {
+				LastEventTime_TextBlock.Visibility = Visibility.Collapsed;
+			} else {
+				LastEventTime_TextBlock.Text = string.Format("{0:m\\:ss}", MatchLength - timedMatchDataElement.Time);
+			}
 		}
 		
 		public Match_Page() {

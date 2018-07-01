@@ -18,8 +18,7 @@ using System.Windows.Resources;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.ObjectModel;
-
-using ScoutingApp_2018.Views;
+using System.Globalization;
 
 namespace ScoutingApp_2018 {
 	public partial class MatchInfo_Page : Page {
@@ -27,10 +26,10 @@ namespace ScoutingApp_2018 {
 		private void CacheInfo() {
 			if(App.MatchInfo_Cache == null)
 				App.MatchInfo_Cache = new MatchInfo();
-
-			App.MatchInfo_Cache.RecorderID = RecorderID_ComboBox.SelectedItem == null ? null : new MatchInfoElement<String>() { Value = ((TextBlock)RecorderID_ComboBox.SelectedItem).Text };
-			App.MatchInfo_Cache.Alliance = Alliance_ComboBox.SelectedItem == null ? null : new MatchInfoElement<String>() { Value = ((TextBlock)Alliance_ComboBox.SelectedItem).Text };
-			App.MatchInfo_Cache.Event = Event_ComboBox.SelectedItem == null && !Event_ComboBox.Text.Any() ? null : new MatchInfoElement<String>() { Value = Event_ComboBox.SelectedItem == null ? Event_ComboBox.Text : ((TextBlock)Event_ComboBox.SelectedItem).Text };
+			
+			App.MatchInfo_Cache.RecorderID = RecorderID_ComboBox.SelectedItem == null ? null : new MatchInfoElement<String>() { Value = RecorderID_ComboBox.SelectedItem.ToString() };
+			App.MatchInfo_Cache.Alliance = Alliance_ComboBox.SelectedItem == null ? null : new MatchInfoElement<String>() { Value = Alliance_ComboBox.SelectedItem.ToString() };
+			App.MatchInfo_Cache.Event = !Event_ComboBox.Text.Any() ? null : new MatchInfoElement<String>() { Value = Event_ComboBox.Text };
 			App.MatchInfo_Cache.MatchNumber = !MatchNumber_TextBox.Text.Any() ? null : new MatchInfoElement<UInt16>() { Value = UInt16.Parse(MatchNumber_TextBox.Text) };
 			App.MatchInfo_Cache.TeamNumber = !TeamNumber_TextBox.Text.Any() ? null : new MatchInfoElement<UInt16>() { Value = UInt16.Parse(TeamNumber_TextBox.Text) };
 		}
@@ -44,41 +43,27 @@ namespace ScoutingApp_2018 {
 			StreamReader streamReader = new StreamReader(streamResourceInfo.Stream);
 			string recorderIDs_json = streamReader.ReadToEnd();
 			JObject recorderIDs_jObject = JObject.Parse(recorderIDs_json);
-			string[] recorderID_array = ((JArray)recorderIDs_jObject.GetValue("recorderID_array")).ToObject<string[]>();
 
 			//Set ComboBox items
-			foreach(string recorderID in recorderID_array) {
-				RecorderID_ComboBox.Items.Add(new TextBlock() {
-					FontFamily = (FontFamily)FindResource("Lato Light"),
-					FontSize = 24,
-					Text = recorderID
-				});
-			}
-			for(int i = 0; i < 6; i++) {
-				Alliance_ComboBox.Items.Add(new TextBlock() {
-					FontFamily = (FontFamily)FindResource("Lato Light"),
-					FontSize = 24,
-					Text = string.Format("{0} {1}", i < 3 ? "Blue" : "Red", i % 3 + 1)
-				});
-			}
-			Event_ComboBox.Items.Add(new TextBlock() {
-				FontFamily = (FontFamily)FindResource("Lato Light"),
-				FontSize = 24,
-				Text = "Practice"
-			});
+			List<string> recorderID_List = ((JArray)recorderIDs_jObject.GetValue("recorderID_array")).ToObject<List<String>>();
+			List<string> alliance_List = new List<string>() { "Blue 1", "Blue 2", "Blue 3", "Red 1", "Red 2", "Red 3" };
+			List<string> eventCode_List = new List<string>() { "Practice" };
+
+			recorderID_List.ForEach(recorderID => RecorderID_ComboBox.Items.Add(recorderID));
+			alliance_List.ForEach(alliance => Alliance_ComboBox.Items.Add(alliance));
+			eventCode_List.ForEach(eventCode => Event_ComboBox.Items.Add(eventCode));
 			
 			//Populate controls from cached info
 			if(App.MatchInfo_Cache != null) {
-				RecorderID_ComboBox.SelectedIndex = App.MatchInfo_Cache.RecorderID == null ? -1 : RecorderID_ComboBox.Items.Cast<TextBlock>().ToList().FindIndex(recorderID_TextBlock => recorderID_TextBlock.Text == App.MatchInfo_Cache.RecorderID.Value);
-				Alliance_ComboBox.SelectedIndex = App.MatchInfo_Cache.Alliance == null ? -1 : Alliance_ComboBox.Items.Cast<TextBlock>().ToList().FindIndex(alliance_TextBlock => alliance_TextBlock.Text == App.MatchInfo_Cache.Alliance.Value);
-				Event_ComboBox.SelectedIndex = App.MatchInfo_Cache.Event == null ? -1 : Event_ComboBox.Items.Cast<TextBlock>().ToList().FindIndex(event_TextBlock => event_TextBlock.Text == App.MatchInfo_Cache.Event.Value);
+				RecorderID_ComboBox.SelectedItem = App.MatchInfo_Cache.RecorderID?.Value;
+				Alliance_ComboBox.SelectedItem = App.MatchInfo_Cache.Alliance?.Value;
 				Event_ComboBox.Text = App.MatchInfo_Cache.Event?.Value;
 				MatchNumber_TextBox.Text = App.MatchInfo_Cache.MatchNumber?.Value.ToString();
 				TeamNumber_TextBox.Text = App.MatchInfo_Cache.TeamNumber?.Value.ToString();
 			} else {
-				RecorderID_ComboBox.SelectedItem = RecorderID_ComboBox.Items[0];
-				Alliance_ComboBox.SelectedItem = Alliance_ComboBox.Items[0];
-				Event_ComboBox.SelectedItem = Event_ComboBox.Items[0];
+				RecorderID_ComboBox.SelectedIndex = 0;
+				Alliance_ComboBox.SelectedIndex = 0;
+				Event_ComboBox.SelectedIndex = 0;
 				MatchNumber_TextBox.Text = "1";
 				TeamNumber_TextBox.Text = "2512";
 			}
@@ -96,23 +81,14 @@ namespace ScoutingApp_2018 {
 			NavigationService.Navigate(new Home_Page());
 		}
 
-		//Restrict MatchNumber_TextBox to UInt16 parsible and otherwise aesthetic text
-		private void MatchNumber_TextBox_TextChanged(object sender, TextChangedEventArgs e) {
-			bool isUInt16 = UInt16.TryParse(((TextBox)sender).Text, out UInt16 outUInt16);
-			if((!isUInt16 || ((TextBox)sender).Text.Contains(' ') || ((TextBox)sender).Text.StartsWith("0")) && ((TextBox)sender).Text.Length > 0) {
-				int pos = ((TextBox)sender).SelectionStart;
-				((TextBox)sender).Text = ((TextBox)sender).Text.Remove(pos - 1, 1);
-				((TextBox)sender).SelectionStart = pos - 1;
-			}
-		}
-
-		//UInt16 parsible
-		private void TeamNumber_TextBox_TextChanged(object sender, TextChangedEventArgs e) {
-			bool isUInt16 = UInt16.TryParse(((TextBox)sender).Text, out UInt16 outUInt16);
-			if((!isUInt16 || ((TextBox)sender).Text.Contains(' ') || ((TextBox)sender).Text.StartsWith("0")) && ((TextBox)sender).Text.Length > 0) {
-				int pos = ((TextBox)sender).SelectionStart;
-				((TextBox)sender).Text = ((TextBox)sender).Text.Remove(pos - 1, 1);
-				((TextBox)sender).SelectionStart = pos - 1;
+		//Restrict TextBox to UInt16 parsible and otherwise aesthetic text
+		private void UInt16_TextBox_TextChanged(object sender, TextChangedEventArgs e) {
+			TextBox sender_TextBox = sender as TextBox;
+			if((sender_TextBox.Text.Any(c => !Char.IsDigit(c)) || sender_TextBox.Text.Length > 5) && sender_TextBox.Text.Any()) {
+				int pos = sender_TextBox.SelectionStart;
+				pos = pos > 0 ? pos : 1;
+				sender_TextBox.Text = sender_TextBox.Text.Remove(pos - 1, 1);
+				sender_TextBox.SelectionStart = pos - 1;
 			}
 		}
 
@@ -127,7 +103,7 @@ namespace ScoutingApp_2018 {
 			} else if(Alliance_ComboBox.SelectedItem == null) {
 				valid = false;
 				prompt = "Please select an alliance";
-			} else if(Event_ComboBox.SelectedItem == null && !Event_ComboBox.Text.Any()) {
+			} else if(!Event_ComboBox.Text.Any()) {
 				valid = false;
 				prompt = "Please enter an event";
 			} else if(MatchNumber_TextBox.Text.Length == 0) {
