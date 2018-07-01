@@ -5,7 +5,6 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ScoutingApp_2018"
-	  xmlns:views="clr-namespace:ScoutingApp_2018.Views"
       mc:Ignorable="d" 
       d:DesignHeight="768" d:DesignWidth="1024"
       Title="Match_Page">
@@ -13,35 +12,78 @@
     <Grid Background="#1F1F1F">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="1*"/>
-			<RowDefinition Height="5*"/>
-			<RowDefinition Height="2*"/>
+			<RowDefinition Height="3*"/>
+			<RowDefinition Height="1*"/>
 		</Grid.RowDefinitions>
 
 		<Border Grid.Row="0" BorderThickness="0, 0, 0, 2" BorderBrush="White">
-			
-		</Border>
-		<Border Grid.Row="2" BorderThickness="0, 2, 0, 0" BorderBrush="White">
 			<Grid>
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="3*"/>
-					<ColumnDefinition Width="5*"/>
-					<ColumnDefinition Width="2*"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
 				</Grid.ColumnDefinitions>
 
-				<StackPanel Grid.Row="0" Name="Timer_StackPanel" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-					<TextBlock Name="TimerMinutes_TextBlock" Foreground="White" FontFamily="{StaticResource Lato Light}" FontSize="64"/>
-					<TextBlock Foreground="White" FontFamily="{StaticResource Lato Light}" FontSize="64">:</TextBlock>
-					<TextBlock Name="TimerSeconds_TextBlock" Foreground="White" FontFamily="{StaticResource Lato Light}" FontSize="64"/>
-				</StackPanel>
-				<StackPanel Grid.Column="0" Margin="20">
-					</StackPanel>
-				<Button Name="Abort_Button" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="40, 40" FontSize="36" Click="Abort_Button_Click">Abort</Button>
-				<StackPanel Grid.Column="2" Margin="20" TextBlock.TextAlignment="Right">
+				<StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="40, 0">
 					<TextBlock Name="RecorderID_TextBlock" Margin="0, 0, 0, 8" Foreground="#AA3939" FontSize="18">RecorderID</TextBlock>
 					<TextBlock Name="Alliance_TextBlock" Margin="0, 0, 0, 8" Foreground="#AA3939" FontSize="18">Alliance</TextBlock>
 					<TextBlock Name="Event_TextBlock" Margin="0, 0, 0, 8" Foreground="#AA3939" FontSize="18">Event</TextBlock>
+				</StackPanel>
+				<TextBlock Name="Timer_TextBlock" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontFamily="{StaticResource Lato Light}" FontSize="64">0:00</TextBlock>
+				<StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="40, 0">
 					<TextBlock Name="MatchNumber_TextBlock" Margin="0, 0, 0, 8" Foreground="#AA3939" FontSize="18">MatchNumber</TextBlock>
 					<TextBlock Name="TeamNumber_TextBlock" Margin="0, 0, 0, 8" Foreground="#AA3939" FontSize="18">TeamNumber</TextBlock>
+				</StackPanel>
+			</Grid>
+		</Border>
+		<Grid Name="Autonomous_Grid" Grid.Row="1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="3*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+
+			<Grid Grid.Column="0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+
+				<Grid Grid.Column="1">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="2*"/>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="2*"/>
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition/>
+						<ColumnDefinition Width="2*"/>
+						<ColumnDefinition/>
+					</Grid.ColumnDefinitions>
+				</Grid>
+			</Grid>
+			<StackPanel Grid.Column="1" Margin="40">
+				<Button Name="CrossBaseline_Button" Margin="0, 0, 0, 20" Height="80" Padding="10, 0" Click="CrossBaseline_Button_Click">
+					<TextBlock FontSize="24" TextWrapping="Wrap" TextAlignment="Center">Cross Baseline</TextBlock>
+				</Button>
+				<Button Height="80" Padding="10, 0">
+					<TextBlock FontSize="24" TextWrapping="Wrap" TextAlignment="Center">Cube from Floor</TextBlock>
+				</Button>
+			</StackPanel>
+		</Grid>
+		
+		<Border Grid.Row="2" BorderThickness="0, 2, 0, 0" BorderBrush="White">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+
+				<StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
+					<Button Name="Abort_Button" HorizontalAlignment="Right" Width="400" Height="100" Margin="40, 0, 0, 0" FontSize="36" Click="Abort_Button_Click">Abort</Button>
+				</StackPanel>
+				<StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal">
+					<StackPanel Name="LastEvent_StackPanel" HorizontalAlignment="Right" Margin="0, 20, 40, 20"/>
+					<Button Name="Undo_Button" Width="200" Height="100" Margin="0, 0, 40, 0" FontSize="36" Click="Undo_Button_Click">Undo</Button>
 				</StackPanel>
 			</Grid>
 		</Border>

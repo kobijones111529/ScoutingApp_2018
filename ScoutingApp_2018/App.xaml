@@ -4,39 +4,106 @@
              xmlns:local="clr-namespace:ScoutingApp_2018"
              StartupUri="MainWindow.xaml">
 	<Application.Resources>
+		<SolidColorBrush x:Key="BaseColor1" Color="#1F1F1F"/>
+		<SolidColorBrush x:Key="BaseColor1Light1" Color="#2F2F2F"/>
+		<SolidColorBrush x:Key="AccentColor1Dark2" Color="#801616"/>
+		<SolidColorBrush x:Key="AccentColor1Dark1" Color="#952525"/>
+		<SolidColorBrush x:Key="AccentColor1" Color="#AA3939"/>
+		<SolidColorBrush x:Key="AccentColor1Light1" Color="#BF4F4F"/>
+		<SolidColorBrush x:Key="AccentColor1Light2" Color="#D46A6A"/>
+		<SolidColorBrush x:Key="AccentColor3Light2" Color="#AA5585"/>
 		<FontFamily x:Key="Raleway Light">pack://application:,,,/Fonts/Raleway/#Raleway Light</FontFamily>
 		<FontFamily x:Key="Lato Light">pack://application:,,,/Fonts/Lato/#Lato Light</FontFamily>
+		<Style TargetType="TextBlock">
+			<Setter Property="Foreground" Value="White"/>
+			<Setter Property="FontFamily" Value="{StaticResource Raleway Light}"/>
+		</Style>
+		<Style TargetType="ListBoxItem">
+			<Setter Property="Background" Value="{StaticResource AccentColor1}"/>
+			<Setter Property="Padding" Value="4, 4"/>
+			<Setter Property="Margin" Value="0, 0, 0, 1"/>
+			<Setter Property="HorizontalContentAlignment" Value="Left"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="ListBoxItem">
+						<Grid>
+							<Border x:Name="Border" Background="Transparent" BorderBrush="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" Opacity="0"/>
+							<Rectangle x:Name="Rectangle" Fill="{TemplateBinding Background}" Opacity="0"/>
+							<ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" />
+						</Grid>
+						<ControlTemplate.Triggers>
+							<MultiTrigger>
+								<MultiTrigger.Conditions>
+									<Condition Property="IsMouseOver" Value="True"/>
+									<Condition Property="IsSelected" Value="False"/>
+								</MultiTrigger.Conditions>
+								<Setter TargetName="Border" Property="Opacity" Value="0.75"/>
+								<Setter TargetName="Rectangle" Property="Opacity" Value="0.25"/>
+							</MultiTrigger>
+							<MultiTrigger>
+								<MultiTrigger.Conditions>
+									<Condition Property="IsSelected" Value="True"/>
+								</MultiTrigger.Conditions>
+								<Setter TargetName="Border" Property="Opacity" Value="0.75"/>
+								<Setter TargetName="Rectangle" Property="Opacity" Value="0.5"/>
+							</MultiTrigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
 		<Style TargetType="Button">
-			<Setter Property="Background" Value="#AA3939"/>
-			<Setter Property="Foreground" Value="#2F2F2F"/>
-			<Setter Property="BorderBrush" Value="#AA3939"/>
+			<Setter Property="Background" Value="{StaticResource AccentColor1}"/>
+			<Setter Property="BorderBrush" Value="Transparent"/>
 			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="Foreground" Value="{StaticResource BaseColor1Light1}"/>
+			<Setter Property="FontFamily" Value="{StaticResource Raleway Light}"/>
 			<Setter Property="Template">
 				<Setter.Value>
 					<ControlTemplate TargetType="Button">
 						<Grid>
-							<Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
-								<Border.Background>
-									<SolidColorBrush Color="#AA3939"/>
-								</Border.Background>
-								<ContentPresenter x:Name="Content" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+							<Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+								<Grid>
+									<Rectangle x:Name="Rectangle" Fill="White" Opacity="0"/>
+									<ContentPresenter x:Name="ContentPresenter"
+													  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+													  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+													  Margin="{TemplateBinding Padding}"
+													  Content="{TemplateBinding Content}"
+													  TextElement.Foreground="{TemplateBinding Foreground}"
+													  TextElement.FontFamily="{TemplateBinding FontFamily}"
+													  TextElement.FontSize="{TemplateBinding FontSize}"
+													  TextElement.FontStretch="{TemplateBinding FontStretch}"
+													  TextElement.FontStyle="{TemplateBinding FontStyle}"
+													  TextElement.FontWeight="{TemplateBinding FontWeight}">
+										<ContentPresenter.Resources>
+											<Style TargetType="TextBlock"/>
+										</ContentPresenter.Resources>
+									</ContentPresenter>
+								</Grid>
 							</Border>
 							<VisualStateManager.VisualStateGroups>
 								<VisualStateGroup x:Name="CommonStates">
 									<VisualState x:Name="Normal"/>
 									<VisualState x:Name="MouseOver">
 										<Storyboard>
-											<ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)">
-												<DiscreteColorKeyFrame KeyTime="0" Value="#D46A6A"/>
-											</ColorAnimationUsingKeyFrames>
+											<DoubleAnimationUsingKeyFrames Storyboard.TargetName="Rectangle" Storyboard.TargetProperty="Opacity">
+												<DiscreteDoubleKeyFrame KeyTime="0" Value="0.1"/>
+											</DoubleAnimationUsingKeyFrames>
 										</Storyboard>
 									</VisualState>
 									<VisualState x:Name="Pressed">
 										<Storyboard>
-											<ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)">
-												<DiscreteColorKeyFrame KeyTime="0" Value="#FFAAAA"/>
-											</ColorAnimationUsingKeyFrames>
-
+											<DoubleAnimationUsingKeyFrames Storyboard.TargetName="Rectangle" Storyboard.TargetProperty="Opacity">
+												<DiscreteDoubleKeyFrame KeyTime="0" Value="0.2"/>
+											</DoubleAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+									<VisualState x:Name="Disabled">
+										<Storyboard>
+											<DoubleAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="Opacity">
+												<DiscreteDoubleKeyFrame KeyTime="0" Value="0.5"/>
+											</DoubleAnimationUsingKeyFrames>
 										</Storyboard>
 									</VisualState>
 								</VisualStateGroup>
@@ -46,21 +113,105 @@
 				</Setter.Value>
 			</Setter>
 		</Style>
-		<Style TargetType="Button" x:Key="BackButton">
+		<Style x:Key="BackButton" TargetType="Button">
 			<Setter Property="Width" Value="80"/>
 			<Setter Property="Height" Value="80"/>
 			<Setter Property="Background" Value="Transparent"/>
 			<Setter Property="BorderBrush" Value="Transparent"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="Foreground" Value="{StaticResource BaseColor1Light1}"/>
+			<Setter Property="FontSize" Value="24"/>
 			<Setter Property="Template">
 				<Setter.Value>
 					<ControlTemplate TargetType="Button">
-						<Grid x:Name="Grid">
-							<Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
-								<TextBlock x:Name="TextBlock" HorizontalAlignment="Center" VerticalAlignment="Center" Text="&#xE72B;" FontFamily="Segoe MDL2 Assets" FontSize="24">
-									<TextBlock.Foreground>
-										<SolidColorBrush Color="#2F2F2F"/>
-									</TextBlock.Foreground>
-								</TextBlock>
+						<Grid>
+							<Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+								<Grid>
+									<Rectangle x:Name="Rectangle" Fill="White" Opacity="0"/>
+									<TextBlock HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Padding="{TemplateBinding Padding}" Foreground="{TemplateBinding Foreground}" FontFamily="Segoe MDL2 Assets" FontSize="{TemplateBinding FontSize}">&#xE72B;</TextBlock>
+								</Grid>
+							</Border>
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroup x:Name="CommonStates">
+									<VisualState x:Name="Normal"/>
+									<VisualState x:Name="MouseOver">
+										<Storyboard>
+											<DoubleAnimationUsingKeyFrames Storyboard.TargetName="Rectangle" Storyboard.TargetProperty="Opacity">
+												<DiscreteDoubleKeyFrame KeyTime="0" Value="0.1"/>
+											</DoubleAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+									<VisualState x:Name="Pressed">
+										<Storyboard>
+											<DoubleAnimationUsingKeyFrames Storyboard.TargetName="Rectangle" Storyboard.TargetProperty="Opacity">
+												<DiscreteDoubleKeyFrame KeyTime="0" Value="0.2"/>
+											</DoubleAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+							</VisualStateManager.VisualStateGroups>
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<Style x:Key="HomeButton" TargetType="Button">
+			<Setter Property="Width" Value="80"/>
+			<Setter Property="Height" Value="80"/>
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="BorderBrush" Value="Transparent"/>
+			<Setter Property="Foreground" Value="{StaticResource BaseColor1Light1}"/>
+			<Setter Property="FontSize" Value="24"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Grid>
+							<Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+								<Grid>
+									<Rectangle x:Name="Rectangle" Fill="White" Opacity="0"/>
+									<TextBlock HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Foreground="{TemplateBinding Foreground}" FontFamily="Segoe MDL2 Assets" FontSize="{TemplateBinding FontSize}">&#xE80F;</TextBlock>
+								</Grid>
+							</Border>
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroup x:Name="CommonStates">
+									<VisualState x:Name="Normal"/>
+									<VisualState x:Name="MouseOver">
+										<Storyboard>
+											<DoubleAnimationUsingKeyFrames Storyboard.TargetName="Rectangle" Storyboard.TargetProperty="Opacity">
+												<DiscreteDoubleKeyFrame KeyTime="0" Value="0.1"/>
+											</DoubleAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+									<VisualState x:Name="Pressed">
+										<Storyboard>
+											<DoubleAnimationUsingKeyFrames Storyboard.TargetName="Rectangle" Storyboard.TargetProperty="Opacity">
+												<DiscreteDoubleKeyFrame KeyTime="0" Value="0.2"/>
+											</DoubleAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+							</VisualStateManager.VisualStateGroups>
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<Style x:Key="DeleteButton" TargetType="Button">
+			<Setter Property="Width" Value="80"/>
+			<Setter Property="Height" Value="80"/>
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="BorderBrush" Value="Transparent"/>
+			<Setter Property="Foreground" Value="{StaticResource BaseColor1Light1}"/>
+			<Setter Property="FontSize" Value="24"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Grid>
+							<Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+								<Grid>
+									<Rectangle x:Name="Rectangle" Fill="White" Opacity="0"/>
+									<TextBlock HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Foreground="{TemplateBinding Foreground}" FontFamily="Segoe MDL2 Assets" FontSize="{TemplateBinding FontSize}">&#xE74D;</TextBlock>
+								</Grid>
 							</Border>
 							<VisualStateManager.VisualStateGroups>
 								<VisualStateGroup x:Name="CommonStates">
@@ -70,16 +221,16 @@
 									<VisualState x:Name="Normal"/>
 									<VisualState x:Name="MouseOver">
 										<Storyboard>
-											<ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)">
-												<DiscreteColorKeyFrame KeyTime="0" Value="#D46A6A"/>
-											</ColorAnimationUsingKeyFrames>
+											<DoubleAnimationUsingKeyFrames Storyboard.TargetName="Rectangle" Storyboard.TargetProperty="Opacity">
+												<DiscreteDoubleKeyFrame KeyTime="0" Value="0.1"/>
+											</DoubleAnimationUsingKeyFrames>
 										</Storyboard>
 									</VisualState>
 									<VisualState x:Name="Pressed">
 										<Storyboard>
-											<ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)">
-												<DiscreteColorKeyFrame KeyTime="0" Value="#FFAAAA"/>
-											</ColorAnimationUsingKeyFrames>
+											<DoubleAnimationUsingKeyFrames Storyboard.TargetName="Rectangle" Storyboard.TargetProperty="Opacity">
+												<DiscreteDoubleKeyFrame KeyTime="0" Value="0.2"/>
+											</DoubleAnimationUsingKeyFrames>
 										</Storyboard>
 									</VisualState>
 								</VisualStateGroup>
@@ -89,21 +240,22 @@
 				</Setter.Value>
 			</Setter>
 		</Style>
-		<Style TargetType="Button" x:Key="HomeButton">
+		<Style x:Key="MoveToFolderButton" TargetType="Button">
 			<Setter Property="Width" Value="80"/>
 			<Setter Property="Height" Value="80"/>
 			<Setter Property="Background" Value="Transparent"/>
 			<Setter Property="BorderBrush" Value="Transparent"/>
+			<Setter Property="Foreground" Value="{StaticResource BaseColor1Light1}"/>
+			<Setter Property="FontSize" Value="24"/>
 			<Setter Property="Template">
 				<Setter.Value>
 					<ControlTemplate TargetType="Button">
-						<Grid x:Name="Grid">
-							<Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
-								<TextBlock x:Name="TextBlock" HorizontalAlignment="Center" VerticalAlignment="Center" Text="&#xE80F;" FontFamily="Segoe MDL2 Assets" FontSize="24">
-									<TextBlock.Foreground>
-										<SolidColorBrush Color="#2F2F2F"/>
-									</TextBlock.Foreground>
-								</TextBlock>
+						<Grid>
+							<Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+								<Grid>
+									<Rectangle x:Name="Rectangle" Fill="White" Opacity="0"/>
+									<TextBlock HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Foreground="{TemplateBinding Foreground}" FontFamily="Segoe MDL2 Assets" FontSize="{TemplateBinding FontSize}">&#xE8DE;</TextBlock>
+								</Grid>
 							</Border>
 							<VisualStateManager.VisualStateGroups>
 								<VisualStateGroup x:Name="CommonStates">
@@ -113,16 +265,16 @@
 									<VisualState x:Name="Normal"/>
 									<VisualState x:Name="MouseOver">
 										<Storyboard>
-											<ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)">
-												<DiscreteColorKeyFrame KeyTime="0" Value="#D46A6A"/>
-											</ColorAnimationUsingKeyFrames>
+											<DoubleAnimationUsingKeyFrames Storyboard.TargetName="Rectangle" Storyboard.TargetProperty="Opacity">
+												<DiscreteDoubleKeyFrame KeyTime="0" Value="0.1"/>
+											</DoubleAnimationUsingKeyFrames>
 										</Storyboard>
 									</VisualState>
 									<VisualState x:Name="Pressed">
 										<Storyboard>
-											<ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)">
-												<DiscreteColorKeyFrame KeyTime="0" Value="#FFAAAA"/>
-											</ColorAnimationUsingKeyFrames>
+											<DoubleAnimationUsingKeyFrames Storyboard.TargetName="Rectangle" Storyboard.TargetProperty="Opacity">
+												<DiscreteDoubleKeyFrame KeyTime="0" Value="0.2"/>
+											</DoubleAnimationUsingKeyFrames>
 										</Storyboard>
 									</VisualState>
 								</VisualStateGroup>
@@ -131,10 +283,6 @@
 					</ControlTemplate>
 				</Setter.Value>
 			</Setter>
-		</Style>
-		<Style TargetType="TextBlock">
-			<Setter Property="Foreground" Value="#1F1F1F"/>
-			<Setter Property="FontFamily" Value="{StaticResource Raleway Light}"/>
 		</Style>
 		<Style TargetType="ComboBox">
 			<Setter Property="FontFamily" Value="{StaticResource Raleway Light}"/>
@@ -143,9 +291,6 @@
 					<Setter Property="IsDropDownOpen" Value="True"/>
 				</Trigger>
 			</Style.Triggers>
-		</Style>
-		<Style TargetType="TextBox">
-			<Setter Property="FontFamily" Value="{StaticResource Raleway Light}"/>
 		</Style>
 	</Application.Resources>
 </Application>

@@ -17,15 +17,28 @@ using System.IO;
 using System.Windows.Resources;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Collections.ObjectModel;
+
+using ScoutingApp_2018.Views;
 
 namespace ScoutingApp_2018 {
 	public partial class MatchInfo_Page : Page {
-		public static MatchInfo_Page CachedPage;
-		public static bool IncrementMatchNumber = false;
+		//Cache entered info
+		private void CacheInfo() {
+			if(App.MatchInfo_Cache == null)
+				App.MatchInfo_Cache = new MatchInfo();
+
+			App.MatchInfo_Cache.RecorderID = RecorderID_ComboBox.SelectedItem == null ? null : new MatchInfoElement<String>() { Value = ((TextBlock)RecorderID_ComboBox.SelectedItem).Text };
+			App.MatchInfo_Cache.Alliance = Alliance_ComboBox.SelectedItem == null ? null : new MatchInfoElement<String>() { Value = ((TextBlock)Alliance_ComboBox.SelectedItem).Text };
+			App.MatchInfo_Cache.Event = Event_ComboBox.SelectedItem == null && !Event_ComboBox.Text.Any() ? null : new MatchInfoElement<String>() { Value = Event_ComboBox.SelectedItem == null ? Event_ComboBox.Text : ((TextBlock)Event_ComboBox.SelectedItem).Text };
+			App.MatchInfo_Cache.MatchNumber = !MatchNumber_TextBox.Text.Any() ? null : new MatchInfoElement<UInt16>() { Value = UInt16.Parse(MatchNumber_TextBox.Text) };
+			App.MatchInfo_Cache.TeamNumber = !TeamNumber_TextBox.Text.Any() ? null : new MatchInfoElement<UInt16>() { Value = UInt16.Parse(TeamNumber_TextBox.Text) };
+		}
 
 		public MatchInfo_Page() {
 			InitializeComponent();
 
+			//Retrieve recorder ids from json file
 			Uri recorderIDs_json_uri = new Uri("/RecorderIDs.json", UriKind.Relative);
 			StreamResourceInfo streamResourceInfo = Application.GetResourceStream(recorderIDs_json_uri);
 			StreamReader streamReader = new StreamReader(streamResourceInfo.Stream);
@@ -33,31 +46,57 @@ namespace ScoutingApp_2018 {
 			JObject recorderIDs_jObject = JObject.Parse(recorderIDs_json);
 			string[] recorderID_array = ((JArray)recorderIDs_jObject.GetValue("recorderID_array")).ToObject<string[]>();
 
+			//Set ComboBox items
 			foreach(string recorderID in recorderID_array) {
-				RecorderID_ComboBox.Items.Add(recorderID);
+				RecorderID_ComboBox.Items.Add(new TextBlock() {
+					FontFamily = (FontFamily)FindResource("Lato Light"),
+					FontSize = 24,
+					Text = recorderID
+				});
 			}
-
-			/*
-			RecorderID_ComboBox.SelectedItem = App.FormDataCache.RecorderID?.Value;
-			Alliance_ComboBox.SelectedItem = App.FormDataCache.Alliance?.Value;
-			Event_ComboBox.SelectedItem = App.FormDataCache.Event?.Value;
-			MatchNumber_TextBox.Text = App.FormDataCache.MatchNumber?.Value.ToString();
-			TeamNumber_TextBox.Text = App.FormDataCache.TeamNumber?.Value.ToString();
-			*/
-
-			//*
-			RecorderID_ComboBox.SelectedItem = App.FormDataCache.RecorderID != null ? App.FormDataCache.RecorderID.Value : RecorderID_ComboBox.Items[0];
-			Alliance_ComboBox.SelectedItem = App.FormDataCache.Alliance != null ? App.FormDataCache.Alliance.Value : Alliance_ComboBox.Items[0];
-			Event_ComboBox.SelectedItem = App.FormDataCache.Event != null ? App.FormDataCache.Event.Value : Event_ComboBox.Items[0];
-			MatchNumber_TextBox.Text = App.FormDataCache.RecorderID != null ? App.FormDataCache.MatchNumber.Value.ToString() : "1";
-			TeamNumber_TextBox.Text = App.FormDataCache.TeamNumber != null ? App.FormDataCache.TeamNumber.Value.ToString() : "2512";
-			//*/
+			for(int i = 0; i < 6; i++) {
+				Alliance_ComboBox.Items.Add(new TextBlock() {
+					FontFamily = (FontFamily)FindResource("Lato Light"),
+					FontSize = 24,
+					Text = string.Format("{0} {1}", i < 3 ? "Blue" : "Red", i % 3 + 1)
+				});
+			}
+			Event_ComboBox.Items.Add(new TextBlock() {
+				FontFamily = (FontFamily)FindResource("Lato Light"),
+				FontSize = 24,
+				Text = "Practice"
+			});
+			
+			//Populate controls from cached info
+			if(App.MatchInfo_Cache != null) {
+				RecorderID_ComboBox.SelectedIndex = App.MatchInfo_Cache.RecorderID == null ? -1 : RecorderID_ComboBox.Items.Cast<TextBlock>().ToList().FindIndex(recorderID_TextBlock => recorderID_TextBlock.Text == App.MatchInfo_Cache.RecorderID.Value);
+				Alliance_ComboBox.SelectedIndex = App.MatchInfo_Cache.Alliance == null ? -1 : Alliance_ComboBox.Items.Cast<TextBlock>().ToList().FindIndex(alliance_TextBlock => alliance_TextBlock.Text == App.MatchInfo_Cache.Alliance.Value);
+				Event_ComboBox.SelectedIndex = App.MatchInfo_Cache.Event == null ? -1 : Event_ComboBox.Items.Cast<TextBlock>().ToList().FindIndex(event_TextBlock => event_TextBlock.Text == App.MatchInfo_Cache.Event.Value);
+				Event_ComboBox.Text = App.MatchInfo_Cache.Event?.Value;
+				MatchNumber_TextBox.Text = App.MatchInfo_Cache.MatchNumber?.Value.ToString();
+				TeamNumber_TextBox.Text = App.MatchInfo_Cache.TeamNumber?.Value.ToString();
+			} else {
+				RecorderID_ComboBox.SelectedItem = RecorderID_ComboBox.Items[0];
+				Alliance_ComboBox.SelectedItem = Alliance_ComboBox.Items[0];
+				Event_ComboBox.SelectedItem = Event_ComboBox.Items[0];
+				MatchNumber_TextBox.Text = "1";
+				TeamNumber_TextBox.Text = "2512";
+			}
 		}
 
+		private void Page_Loaded(object sender, RoutedEventArgs e) {
+			App.MatchInfo_Page_Cache = null;
+		}
+
+		//Navigate to home
 		public void Home_Button_Click(object sender, RoutedEventArgs e) {
+			App.MatchInfo_Page_Cache = this;
+			CacheInfo();
+
 			NavigationService.Navigate(new Home_Page());
 		}
 
+		//Restrict MatchNumber_TextBox to UInt16 parsible and otherwise aesthetic text
 		private void MatchNumber_TextBox_TextChanged(object sender, TextChangedEventArgs e) {
 			bool isUInt16 = UInt16.TryParse(((TextBox)sender).Text, out UInt16 outUInt16);
 			if((!isUInt16 || ((TextBox)sender).Text.Contains(' ') || ((TextBox)sender).Text.StartsWith("0")) && ((TextBox)sender).Text.Length > 0) {
@@ -67,6 +106,7 @@ namespace ScoutingApp_2018 {
 			}
 		}
 
+		//UInt16 parsible
 		private void TeamNumber_TextBox_TextChanged(object sender, TextChangedEventArgs e) {
 			bool isUInt16 = UInt16.TryParse(((TextBox)sender).Text, out UInt16 outUInt16);
 			if((!isUInt16 || ((TextBox)sender).Text.Contains(' ') || ((TextBox)sender).Text.StartsWith("0")) && ((TextBox)sender).Text.Length > 0) {
@@ -76,40 +116,36 @@ namespace ScoutingApp_2018 {
 			}
 		}
 
+		//Cache info if valid (otherwise alerts user and returns), navigates to prematch info page
 		private void Submit_Button_Click(object sender, RoutedEventArgs e) {
+			bool valid = true;
+			string prompt = string.Empty;
+
 			if(RecorderID_ComboBox.SelectedItem == null) {
-				InvalidData_TextBlock.Text = "Please select a recorder id";
-				InvalidData_StackPanel.Visibility = Visibility.Visible;
-				Data_ScrollViewer.ScrollToVerticalOffset(0);
-				return;
+				valid = false;
+				prompt = "Please select a recorder id";
 			} else if(Alliance_ComboBox.SelectedItem == null) {
-				InvalidData_TextBlock.Text = "Please select an alliance";
-				InvalidData_StackPanel.Visibility = Visibility.Visible;
-				Data_ScrollViewer.ScrollToVerticalOffset(0);
-				return;
-			} else if(Event_ComboBox.SelectedItem == null) {
-				InvalidData_TextBlock.Text = "Please enter an event";
-				InvalidData_StackPanel.Visibility = Visibility.Visible;
-				Data_ScrollViewer.ScrollToVerticalOffset(0);
-				return;
+				valid = false;
+				prompt = "Please select an alliance";
+			} else if(Event_ComboBox.SelectedItem == null && !Event_ComboBox.Text.Any()) {
+				valid = false;
+				prompt = "Please enter an event";
 			} else if(MatchNumber_TextBox.Text.Length == 0) {
-				InvalidData_TextBlock.Text = "Please enter a match number";
-				InvalidData_StackPanel.Visibility = Visibility.Visible;
-				Data_ScrollViewer.ScrollToVerticalOffset(0);
-				return;
+				valid = false;
+				prompt = "Please enter a match number";
 			} else if(TeamNumber_TextBox.Text.Length == 0) {
-				InvalidData_TextBlock.Text = "Please enter a team number";
+				valid = false;
+				prompt = "Please enter a team number";
+			}
+
+			if(!valid) {
+				InvalidData_TextBlock.Text = prompt;
 				InvalidData_StackPanel.Visibility = Visibility.Visible;
 				Data_ScrollViewer.ScrollToVerticalOffset(0);
 				return;
 			}
 
-			App.FormDataCache.RecorderID = new DataElement<String>(RecorderID_ComboBox.SelectedItem.ToString());
-			App.FormDataCache.Alliance = new DataElement<String>(Alliance_ComboBox.SelectedItem.ToString());
-			App.FormDataCache.Event = new DataElement<String>(Event_ComboBox.SelectedItem.ToString());
-			App.FormDataCache.MatchNumber = new DataElement<UInt16>(UInt16.Parse(MatchNumber_TextBox.Text));
-			App.FormDataCache.TeamNumber = new DataElement<UInt16>(UInt16.Parse(TeamNumber_TextBox.Text));
-
+			CacheInfo();
 			NavigationService.Navigate(new Prematch_Page());
 		}
 	}

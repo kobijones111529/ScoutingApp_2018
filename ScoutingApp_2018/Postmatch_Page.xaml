@@ -1,0 +1,32 @@
+﻿<Page x:Class="ScoutingApp_2018.Postmatch_Page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ScoutingApp_2018"
+      mc:Ignorable="d" 
+      d:DesignHeight="768" d:DesignWidth="1024"
+      Title="Postmatch_Page">
+
+    <Grid Background="#1F1F1F">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="3*"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+
+		<StackPanel Grid.Row="0" Margin="200, 40">
+			<TextBlock Foreground="White" FontSize="24">Postmatch Notes</TextBlock>
+			<TextBox Name="PostmatchNotes_TextBox" FontSize="24" Height="100" AcceptsReturn="True"/>
+		</StackPanel>
+
+		<Grid Grid.Row="1" Margin="100, 40">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="4*"/>
+				<ColumnDefinition/>
+				<ColumnDefinition Width="4*"/>
+			</Grid.ColumnDefinitions>
+			<Button Name="SaveData_Button" Grid.Column="0" FontSize="36" Click="SaveData_Button_Click">Save Data</Button>
+			<Button Name="DiscardData_Button" Grid.Column="2" FontSize="36" Click="DiscardData_Button_Click">Discard Data</Button>
+		</Grid>
+    </Grid>
+</Page>

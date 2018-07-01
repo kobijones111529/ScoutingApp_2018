@@ -59,10 +59,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ViewModel\TimerViewModel.cs" />
-    <Compile Include="Views\TimerView.xaml.cs">
-      <DependentUpon>TimerView.xaml</DependentUpon>
+    <Compile Include="Views\KeyValueView.xaml.cs">
+      <DependentUpon>KeyValueView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Data_Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FileViewItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Home_Page.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -74,6 +81,14 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data_Page.xaml.cs">
+      <DependentUpon>Data_Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FileModel.cs" />
+    <Compile Include="Common\ModelBase.cs" />
+    <Compile Include="Views\FileViewItem.xaml.cs">
+      <DependentUpon>FileViewItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Home_Page.xaml.cs">
       <DependentUpon>Home_Page.xaml</DependentUpon>
@@ -90,11 +105,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Postmatch_Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Prematch_Page.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\TimerView.xaml">
+    <Page Include="Views\KeyValueView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -106,7 +125,9 @@
     <Compile Include="Match_Page.xaml.cs">
       <DependentUpon>Match_Page.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\TimerModel.cs" />
+    <Compile Include="Postmatch_Page.xaml.cs">
+      <DependentUpon>Postmatch_Page.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Prematch_Page.xaml.cs">
       <DependentUpon>Prematch_Page.xaml</DependentUpon>
     </Compile>
@@ -165,6 +186,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ModelViews\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -6,7 +6,8 @@
       xmlns:local="clr-namespace:ScoutingApp_2018"
       mc:Ignorable="d" 
       d:DesignHeight="768" d:DesignWidth="1024"
-      Title="Prematch_Page">
+      Title="Prematch_Page"
+	  Loaded="Page_Loaded">
 	<Grid Background="#1F1F1F">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto"/>
@@ -23,7 +24,7 @@
 				<RowDefinition/>
 			</Grid.RowDefinitions>
 
-			<ScrollViewer Grid.Row="0">
+			<ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
 				<Grid Margin="0, 50">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition/>
@@ -41,7 +42,7 @@
 						</StackPanel>
 						<StackPanel>
 							<TextBlock Foreground="White" FontSize="24">Prematch Notes</TextBlock>
-							<TextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="PrematchNotes_TextBox" FontSize="24" Margin="0, 0, 0, 50" AcceptsReturn="True"/>
+							<TextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="PrematchNotes_TextBox" Margin="0, 0, 0, 50" Height="100" FontSize="24" AcceptsReturn="True"/>
 						</StackPanel>
 					</StackPanel>
 				</Grid>

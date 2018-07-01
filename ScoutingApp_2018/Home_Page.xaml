@@ -16,7 +16,7 @@
 		<Grid Background="#AA3939">
 			<StackPanel Grid.Row="0">
 				<Button Width="200" Height="100" FontSize="36" Click="Scouting_Button_Click">Scouting</Button>
-				<Button Width="200" Height="100" FontSize="36">Data</Button>
+				<Button Width="200" Height="100" FontSize="36" Click="Data_Button_Click">Data</Button>
 			</StackPanel>
 		</Grid>
 	</Grid>

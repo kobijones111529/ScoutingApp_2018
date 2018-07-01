@@ -14,8 +14,19 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ScoutingApp_2018.Views {
-	public partial class TimerView : UserControl {
-		public TimerView() {
+	public partial class KeyValueView : TextBlock {
+		public String Key {
+			get {
+				return (String)GetValue(KeyProperty);
+			}
+			set {
+				SetValue(KeyProperty, value);
+			}
+		}
+
+		public static readonly DependencyProperty KeyProperty = DependencyProperty.Register("Key", typeof(String), typeof(KeyValueView), new PropertyMetadata());
+
+		public KeyValueView() {
 			InitializeComponent();
 		}
 	}

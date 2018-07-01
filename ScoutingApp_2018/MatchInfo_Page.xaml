@@ -5,9 +5,11 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ScoutingApp_2018"
 	  xmlns:sys="clr-namespace:System;assembly=mscorlib"
+	  xmlns:views="clr-namespace:ScoutingApp_2018.Views"
       mc:Ignorable="d"
       d:DesignHeight="768" d:DesignWidth="1024"
-      Title="MatchInfo_Page">
+      Title="MatchInfo_Page"
+	  Loaded="Page_Loaded">
 	<Page.Resources>
 		<x:Array x:Key="Alliance_Array" Type="sys:String">
 			<sys:String>Blue 1</sys:String>
@@ -51,23 +53,25 @@
 						</StackPanel>
 						<StackPanel>
 							<TextBlock Foreground="White" FontSize="24">Recorder ID</TextBlock>
-							<ComboBox Name="RecorderID_ComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="24" Margin="0, 0, 0, 40"/>
+							<ComboBox Name="RecorderID_ComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontFamily="{StaticResource Lato Light}" FontSize="24" Margin="0, 0, 0, 40">
+								
+							</ComboBox>
 						</StackPanel>
 						<StackPanel>
 							<TextBlock Foreground="White" FontSize="24">Alliance</TextBlock>
-							<ComboBox Name="Alliance_ComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="24" Margin="0, 0, 0, 40" ItemsSource="{StaticResource Alliance_Array}"/>
+							<ComboBox Name="Alliance_ComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontFamily="{StaticResource Lato Light}" FontSize="24" Margin="0, 0, 0, 40"/>
 						</StackPanel>
 						<StackPanel>
 							<TextBlock Foreground="White" FontSize="24">Event</TextBlock>
-							<ComboBox Name="Event_ComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="24" Margin="0, 0, 0, 40" ItemsSource="{StaticResource Event_Array}" IsEditable="True"/>
+							<ComboBox Name="Event_ComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontFamily="{StaticResource Lato Light}" FontSize="24" Margin="0, 0, 0, 40" IsEditable="True"/>
 						</StackPanel>
 						<StackPanel>
 							<TextBlock Foreground="White" FontSize="24">Match Number</TextBlock>
-							<TextBox Name="MatchNumber_TextBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24" Margin="0, 0, 0, 40" TextChanged="MatchNumber_TextBox_TextChanged"/>
+							<TextBox Name="MatchNumber_TextBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontFamily="{StaticResource Lato Light}" FontSize="24" Margin="0, 0, 0, 40" TextChanged="MatchNumber_TextBox_TextChanged"/>
 						</StackPanel>
 						<StackPanel>
 							<TextBlock Foreground="White" FontSize="24">Team Number</TextBlock>
-							<TextBox Name="TeamNumber_TextBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24" Margin="0, 0, 0, 50" TextChanged="TeamNumber_TextBox_TextChanged"/>
+							<TextBox Name="TeamNumber_TextBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontFamily="{StaticResource Lato Light}" FontSize="24" Margin="0, 0, 0, 50" TextChanged="TeamNumber_TextBox_TextChanged"/>
 						</StackPanel>
 					</StackPanel>
 				</Grid>

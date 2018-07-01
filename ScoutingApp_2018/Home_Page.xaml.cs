@@ -19,8 +19,20 @@ namespace ScoutingApp_2018 {
 			InitializeComponent();
 		}
 
+		//Go to scouting info page
 		private void Scouting_Button_Click(object sender, RoutedEventArgs e) {
-			NavigationService.Navigate(new MatchInfo_Page());
+			if(App.MatchInfo_Page_Cache != null) {
+				NavigationService.Navigate(App.MatchInfo_Page_Cache);
+			} else if(App.Prematch_Page_Cache != null) {
+				NavigationService.Navigate(App.Prematch_Page_Cache);
+			} else {
+				NavigationService.Navigate(new MatchInfo_Page());
+			}
+		}
+
+		//Go to data and file management page
+		private void Data_Button_Click(object sender, RoutedEventArgs e) {
+			NavigationService.Navigate(new Data_Page());
 		}
 	}
 }
