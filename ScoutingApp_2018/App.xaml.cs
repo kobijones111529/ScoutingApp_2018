@@ -16,7 +16,7 @@ namespace ScoutingApp_2018 {
 	}
 
 	public enum Stage {
-		Autonomous, Teleop, Endgame
+		Autonomous, Teleop
 	}
 
 	//All data to be stored locally in json format
@@ -43,8 +43,12 @@ namespace ScoutingApp_2018 {
 		TimeSpan Time { get; set; }
 	}
 
+	public interface IEndgameMatchDataElement : IMatchDataElement {
+
+	}
+
 	//Match data types
-	public class AutonomousCrossBaseline : ITimedMatchDataElement {
+	public class CrossBaseline : ITimedMatchDataElement {
 		private String _type = "Cross Baseline";
 		private Stage _stage = Stage.Autonomous;
 		private TimeSpan _time;
@@ -57,6 +61,34 @@ namespace ScoutingApp_2018 {
 		public Stage Stage {
 			get {
 				return _stage;
+			}
+		}
+		public TimeSpan Time {
+			get {
+				return _time;
+			}
+			set {
+				_time = value;
+			}
+		}
+	}
+
+	public class CubeFromFloor : ITimedMatchDataElement {
+		private String _type = "Cube from Floor";
+		private Stage _stage;
+		private TimeSpan _time;
+
+		public String Type {
+			get {
+				return _type;
+			}
+		}
+		public Stage Stage {
+			get {
+				return _stage;
+			}
+			set {
+				_stage = value;
 			}
 		}
 		public TimeSpan Time {

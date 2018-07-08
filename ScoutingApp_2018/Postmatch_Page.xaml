@@ -15,7 +15,19 @@
 		</Grid.RowDefinitions>
 
 		<StackPanel Grid.Row="0" Margin="200, 40">
-			<TextBlock Foreground="White" FontSize="24">Postmatch Notes</TextBlock>
+			<StackPanel.Resources>
+				<Style TargetType="TextBlock">
+					<Setter Property="Foreground" Value="White"/>
+					<Setter Property="FontFamily" Value="{StaticResource Raleway Light}"/>
+					<Setter Property="FontSize" Value="24"/>
+				</Style>
+				<Style TargetType="TextBox">
+					<Setter Property="Foreground" Value="{StaticResource BaseColor1Light1}"/>
+					<Setter Property="FontFamily" Value="{StaticResource Lato Light}"/>
+					<Setter Property="FontSize" Value="24"/>
+				</Style>
+			</StackPanel.Resources>
+			<TextBlock Margin="0, 0, 0, 8" Foreground="White" FontSize="24">Postmatch Notes</TextBlock>
 			<TextBox Name="PostmatchNotes_TextBox" FontSize="24" Height="100" AcceptsReturn="True"/>
 		</StackPanel>
 

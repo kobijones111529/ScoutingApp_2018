@@ -23,23 +23,34 @@
 				<RowDefinition/>
 			</Grid.RowDefinitions>
 
-			<ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition/>
-						<ColumnDefinition Width="3*"/>
-						<ColumnDefinition/>
-					</Grid.ColumnDefinitions>
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition/>
+					<ColumnDefinition Width="3*"/>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
 
-					<ListBox Grid.Column="1" Name="Files_ListBox" Margin="0, 40, 0, 0" Background="Transparent" BorderThickness="0" SelectionMode="Multiple" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden">
-						<ListBox.ItemTemplate>
-							<DataTemplate>
-								<TextBlock FontFamily="{StaticResource Lato Light}" FontSize="12" Text="{Binding Value}"/>
-							</DataTemplate>
-						</ListBox.ItemTemplate>
-					</ListBox>
+				<StackPanel Grid.Column="1">
+					<StackPanel Background="{StaticResource AccentColor1}" Orientation="Horizontal">
+						
+						<Button Style="{StaticResource DeleteButton}" Name="Delete_Button" Margin="0" Background="{StaticResource AccentColor1}"/>
+					</StackPanel>
+					<ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+						<ListBox Grid.Column="1" Name="Files_ListBox" Margin="0, 0, 0, 0" Background="Transparent" BorderThickness="0" SelectionMode="Multiple" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+							<ListBox.Resources>
+								<Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+									<Setter Property="Margin" Value="0, 0, 0, 1"/>
+									<Setter Property="Foreground" Value="White"/>
+									<Setter Property="FontFamily" Value="{StaticResource Lato Light}"/>
+									<Setter Property="FontSize" Value="14"/>
+									<Setter Property="Content" Value="{Binding Value}"/>
+								</Style>
+							</ListBox.Resources>
+						</ListBox>
+					</ScrollViewer>
+				</StackPanel>
+					
 				</Grid>
-			</ScrollViewer>
 			<Border Grid.Row="1" BorderBrush="White" BorderThickness="0, 2, 0, 0">
 				<Grid Background="{StaticResource AccentColor1}" HorizontalAlignment="Center" VerticalAlignment="Center">
 					<StackPanel Orientation="Horizontal">

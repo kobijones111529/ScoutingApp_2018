@@ -24,45 +24,80 @@ namespace ScoutingApp_2018 {
 		private DispatcherTimer MatchDispatcherTimer;
 		private Stopwatch MatchStopwatch;
 
-		public TimeSpan MatchLength {
+		private Stage Stage {
 			get {
-				return new TimeSpan(0, 0, 3);
+				return MatchStopwatch.Elapsed < new TimeSpan(0, 0, 15) ? Stage.Autonomous : Stage.Teleop;
 			}
 		}
-		public TimeSpan TimeRemaining {
+		private bool Endgame {
 			get {
-				return MatchLength - MatchStopwatch.Elapsed;
+				return MatchStopwatch.Elapsed < new TimeSpan(0, 2, 0) ? false : true;
 			}
 		}
+		private TimeSpan MatchLength => new TimeSpan(0, 1, 3);
+		private TimeSpan TimeRemaining(TimeSpan time) => MatchLength - time;
+		private TimeSpan SecondsRemaining(TimeSpan time) => TimeSpan.FromSeconds(Math.Ceiling(TimeRemaining(time).TotalSeconds));
 
 		//Displays last event for user
-		private void UpdateLastEvent() {
+		private void DisplayLastEvent() {
 			if(!matchData.Any()) {
 				Undo_Button.IsEnabled = false;
 
-				LastEventType_TextBlock.Text = "Match Started";
+				LastEventType_TextBlock.Visibility = Visibility.Visible;
 				LastEventStage_TextBlock.Visibility = Visibility.Collapsed;
 				LastEventTime_TextBlock.Visibility = Visibility.Collapsed;
+				LastEventType_TextBlock.Text = "Match Started";
+				LastEventStage_TextBlock.Text = string.Empty;
+				LastEventTime_TextBlock.Text = string.Empty;
 
 				return;
-			} else {
-				Undo_Button.IsEnabled = true;
-				
-				LastEventStage_TextBlock.Visibility = Visibility.Visible;
-				LastEventTime_TextBlock.Visibility = Visibility.Visible;
 			}
 
+			Undo_Button.IsEnabled = true;
+
+			LastEventType_TextBlock.Visibility = Visibility.Visible;
+			LastEventStage_TextBlock.Visibility = Visibility.Visible;
 			LastEventType_TextBlock.Text = matchData[0].Type;
 			LastEventStage_TextBlock.Text = matchData[0].Stage.ToString();
 
 			ITimedMatchDataElement timedMatchDataElement = matchData[0] as ITimedMatchDataElement;
 			if(timedMatchDataElement == null) {
 				LastEventTime_TextBlock.Visibility = Visibility.Collapsed;
+				LastEventTime_TextBlock.Text = string.Empty;
 			} else {
-				LastEventTime_TextBlock.Text = string.Format("{0:m\\:ss}", MatchLength - timedMatchDataElement.Time);
+				LastEventTime_TextBlock.Visibility = Visibility.Visible;
+				LastEventTime_TextBlock.Text = string.Format(@"{0:m\:ss}", SecondsRemaining(timedMatchDataElement.Time));
+			}
+
+			int repeatCount = 0;
+			for(int i = 0; matchData[i].GetType() == matchData[0].GetType(); i++) {
+				repeatCount = i;
+				if(matchData.Count <= i + 1)
+					break;
+			}
+			if(repeatCount > 0) {
+				LastEventRepeatCount_TextBlock.Visibility = Visibility.Visible;
+				LastEventRepeatCount_TextBlock.Text = string.Format("({0})", repeatCount + 1);
+			} else {
+				LastEventRepeatCount_TextBlock.Visibility = Visibility.Collapsed;
+				LastEventRepeatCount_TextBlock.Text = string.Empty;
 			}
 		}
-		
+
+		private void MatchDispatcherTimer_Tick(object sender, EventArgs e) {
+			if(TimeRemaining(MatchStopwatch.Elapsed) < TimeSpan.Zero) {
+				MatchDispatcherTimer.Stop();
+				MatchStopwatch.Stop();
+				Abort_Continue_Button.Click -= Abort_Button_Click;
+				Abort_Continue_Button.Click += Continue_Button_Click;
+				Abort_Continue_Button.Content = "Continue";
+				Timer_TextBlock.Text = "0:00";
+				Timer_TextBlock.Foreground = (SolidColorBrush)FindResource("AccentColor1");
+			} else {
+				Timer_TextBlock.Text = string.Format(@"{0:m\:ss}", SecondsRemaining(MatchStopwatch.Elapsed));
+			}
+		}
+
 		public Match_Page() {
 			InitializeComponent();
 
@@ -72,30 +107,14 @@ namespace ScoutingApp_2018 {
 			MatchNumber_TextBlock.Text = string.Format("Match {0}", App.MatchInfo_Cache.MatchNumber.Value);
 			TeamNumber_TextBlock.Text = string.Format("Team {0}", App.MatchInfo_Cache.TeamNumber.Value);
 
-			UpdateLastEvent();
+			DisplayLastEvent();
 
 			MatchDispatcherTimer = new DispatcherTimer();
 			MatchDispatcherTimer.Tick += MatchDispatcherTimer_Tick;
-			MatchDispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 1);
+			MatchDispatcherTimer.Interval = TimeSpan.FromMilliseconds(1);
 			MatchStopwatch = new Stopwatch();
 			MatchStopwatch.Start();
 			MatchDispatcherTimer.Start();
-		}
-
-		private void MatchDispatcherTimer_Tick(object sender, EventArgs e) {
-			if(TimeRemaining < TimeSpan.Zero) {
-				MatchDispatcherTimer.Stop();
-				MatchStopwatch.Stop();
-				Abort_Button.Click -= Abort_Button_Click;
-				Abort_Button.Click += Abort_Button_Click_Continue;
-				Abort_Button.Content = "Continue";
-				Timer_TextBlock.Text = "0:00";
-				Timer_TextBlock.Foreground = new SolidColorBrush(Color.FromRgb(170, 57, 57));
-			} else {
-				int minutes = (int)TimeRemaining.TotalMinutes;
-				int seconds = (int)TimeRemaining.TotalSeconds % 60;
-				Timer_TextBlock.Text = string.Format("{0:0}:{1:00}", minutes, seconds);
-			}
 		}
 
 		private void Abort_Button_Click(object sender, RoutedEventArgs e) {
@@ -103,22 +122,32 @@ namespace ScoutingApp_2018 {
 			NavigationService.Navigate(new Prematch_Page());
 		}
 
-		private void Abort_Button_Click_Continue(object sender, RoutedEventArgs e) {
+		private void Continue_Button_Click(object sender, RoutedEventArgs e) {
 			App.MatchData_Cache = matchData;
 
 			NavigationService.Navigate(new Postmatch_Page());
 		}
 
 		private void Undo_Button_Click(object sender, RoutedEventArgs e) {
-			matchData.RemoveAt(0);
-			UpdateLastEvent();
+			if(matchData.Any()) {
+				matchData.RemoveAt(0);
+				DisplayLastEvent();
+			}
 		}
 
 		private void CrossBaseline_Button_Click(object sender, RoutedEventArgs e) {
-			matchData.Insert(0, new AutonomousCrossBaseline() {
+			matchData.Insert(0, new CrossBaseline() {
 				Time = MatchStopwatch.Elapsed
 			});
-			UpdateLastEvent();
+			DisplayLastEvent();
+		}
+
+		private void CubeFromFloor_Button_Click(object sender, RoutedEventArgs e) {
+			matchData.Insert(0, new CubeFromFloor() {
+				Stage = Stage,
+				Time = MatchStopwatch.Elapsed
+			});
+			DisplayLastEvent();
 		}
 	}
 }

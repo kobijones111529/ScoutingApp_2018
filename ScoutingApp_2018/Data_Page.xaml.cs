@@ -65,7 +65,7 @@ namespace ScoutingApp_2018 {
 			if(folderBrowserDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
 				string path = folderBrowserDialog.SelectedPath;
 				foreach(StringPair file_FileViewItem in Files_ListBox.SelectedItems) {
-					string file = file_FileViewItem.Value;
+					string file = file_FileViewItem.Key;
 					FileStream sourceStream = File.Open(file, FileMode.Open);
 					FileStream destinationStream = File.Create(Path.Combine(path, Path.GetFileName(file)));
 					await sourceStream.CopyToAsync(destinationStream);

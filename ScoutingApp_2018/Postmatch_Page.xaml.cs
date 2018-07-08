@@ -53,7 +53,7 @@ namespace ScoutingApp_2018 {
 
 			//Loop throught match events
 			while(matchData.Count > 0) {
-				if(matchData[0].GetType() == typeof(AutonomousCrossBaseline)) {
+				if(matchData[0].GetType() == typeof(CrossBaseline)) {
 					data.AutonomousCrossBaseline = true;
 				}
 
