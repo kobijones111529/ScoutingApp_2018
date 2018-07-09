@@ -52,9 +52,15 @@ namespace ScoutingApp_2018 {
 			};
 
 			//Loop throught match events
-			while(matchData.Count > 0) {
+			while(matchData.Any()) {
 				if(matchData[0].GetType() == typeof(CrossBaseline)) {
 					data.AutonomousCrossBaseline = true;
+				} else if(matchData[0].GetType() == typeof(CubeFromFloor)) {
+					if(matchData[0].Stage == Stage.Autonomous) {
+						data.AutonomousCubeFromFloorCount++;
+					} else {
+						data.TeleopCubeFromFloorCount++;
+					}
 				}
 
 				matchData.RemoveAt(0);

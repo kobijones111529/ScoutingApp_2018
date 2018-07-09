@@ -31,6 +31,8 @@ namespace ScoutingApp_2018 {
 		public String PrematchNotes;
 		public String PostmatchNotes;
 		public Boolean AutonomousCrossBaseline;
+		public UInt16 AutonomousCubeFromFloorCount;
+		public UInt16 TeleopCubeFromFloorCount;
 	}
 
 	//Base classes for match data types
@@ -38,11 +40,9 @@ namespace ScoutingApp_2018 {
 		String Type { get; }
 		Stage Stage { get; }
 	}
-
 	public interface ITimedMatchDataElement : IMatchDataElement {
 		TimeSpan Time { get; set; }
 	}
-
 	public interface IEndgameMatchDataElement : IMatchDataElement {
 
 	}

@@ -24,6 +24,8 @@ namespace ScoutingApp_2018 {
 		private DispatcherTimer MatchDispatcherTimer;
 		private Stopwatch MatchStopwatch;
 
+		private DispatcherTimer AbortDispatcherTimer;
+
 		private Stage Stage {
 			get {
 				return MatchStopwatch.Elapsed < new TimeSpan(0, 0, 15) ? Stage.Autonomous : Stage.Teleop;
@@ -99,6 +101,22 @@ namespace ScoutingApp_2018 {
 		}
 
 		public Match_Page() {
+			MatchDispatcherTimer = new DispatcherTimer();
+			MatchDispatcherTimer.Tick += MatchDispatcherTimer_Tick;
+			MatchDispatcherTimer.Interval = TimeSpan.FromMilliseconds(1);
+			MatchStopwatch = new Stopwatch();
+			MatchStopwatch.Start();
+			MatchDispatcherTimer.Start();
+
+			AbortDispatcherTimer = new DispatcherTimer() {
+				Interval = new TimeSpan(0, 0, 3)
+			};
+			AbortDispatcherTimer.Tick += delegate {
+				AbortDispatcherTimer.Stop();
+				MatchDispatcherTimer.Stop();
+				NavigationService.Navigate(new Prematch_Page());
+			};
+
 			InitializeComponent();
 
 			RecorderID_TextBlock.Text = string.Format(App.MatchInfo_Cache.RecorderID.Value);
@@ -108,18 +126,30 @@ namespace ScoutingApp_2018 {
 			TeamNumber_TextBlock.Text = string.Format("Team {0}", App.MatchInfo_Cache.TeamNumber.Value);
 
 			DisplayLastEvent();
-
-			MatchDispatcherTimer = new DispatcherTimer();
-			MatchDispatcherTimer.Tick += MatchDispatcherTimer_Tick;
-			MatchDispatcherTimer.Interval = TimeSpan.FromMilliseconds(1);
-			MatchStopwatch = new Stopwatch();
-			MatchStopwatch.Start();
-			MatchDispatcherTimer.Start();
 		}
 
-		private void Abort_Button_Click(object sender, RoutedEventArgs e) {
-			MatchDispatcherTimer.Stop();
-			NavigationService.Navigate(new Prematch_Page());
+		private void Abort_Button_PreviewMouseDown(object sender, MouseEventArgs e) {
+			AbortDispatcherTimer.Start();
+		}
+
+		private void Abort_Button_PreviewMouseUp(object sender, MouseEventArgs e) {
+			AbortDispatcherTimer.Stop();
+		}
+
+		private void Abort_Button_PreviewStylusDown(object sender, StylusEventArgs e) {
+			AbortDispatcherTimer.Start();
+		}
+
+		private void Abort_Button_PreviewStylusUp(object sender, StylusEventArgs e) {
+			AbortDispatcherTimer.Stop();
+		}
+
+		private void Abort_Button_PreviewTouchDown(object sender, TouchEventArgs e) {
+			AbortDispatcherTimer.Start();
+		}
+
+		private void Abort_Button_PreviewTouchUp(object sender, TouchEventArgs e) {
+			AbortDispatcherTimer.Stop();
 		}
 
 		private void Continue_Button_Click(object sender, RoutedEventArgs e) {

@@ -94,7 +94,7 @@
 				</Grid.ColumnDefinitions>
 
 				<StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
-					<Button Name="Abort_Continue_Button" HorizontalAlignment="Right" Width="400" Height="100" Margin="40, 0, 0, 0" FontSize="36" Click="Abort_Button_Click">Abort</Button>
+					<Button Name="Abort_Continue_Button" HorizontalAlignment="Right" Width="400" Height="100" Margin="40, 0, 0, 0" FontSize="36" PreviewMouseDown="Abort_Button_PreviewMouseDown" PreviewMouseUp="Abort_Button_PreviewMouseUp" PreviewStylusDown="Abort_Button_PreviewStylusDown" PreviewStylusUp="Abort_Button_PreviewStylusUp" PreviewTouchDown="Abort_Button_PreviewTouchDown" PreviewTouchUp="Abort_Button_PreviewTouchUp">Abort</Button>
 				</StackPanel>
 				<StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal">
 					<StackPanel Name="LastEvent_StackPanel" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0, 20, 40, 20">
